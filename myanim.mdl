@@ -1,0 +1,15 @@
+frames 100
+basename planet
+push
+move 250 250 0
+rotate z -60
+rotate y 30
+rotate x 360 spinny
+sphere 0 0 0 150
+push
+move -100 200 0
+sphere 0 0 0 30
+rotate y 360 rolly
+vary spinny 0 99 0 1
+vary rolly 0 99 0 2
+
