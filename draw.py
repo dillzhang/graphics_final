@@ -4,29 +4,69 @@ from gmath import calculate_dot
 from math import cos, sin, pi
 
 MAX_STEPS = 100
+colors = [
+    [238, 064, 053],
+    [243, 119, 054],
+    [253, 244, 152],
+    [123, 192, 067],
+    [003, 146, 207],
+    # [250, 205, 205],
+    # [248, 250, 205],
+    # [210, 250, 205],
+    # [205, 250, 236],
+    # [236, 205, 250]
+]
 
-def add_polygon( points, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
-    add_point( points, x0, y0, z0 )
-    add_point( points, x1, y1, z1 )
-    add_point( points, x2, y2, z2 )
+
+def scanline_conversion(screen, tx, ty, mx, my, bx, by, color):
+    counter = 0
+    while by + counter < ty:
+        delta0 = float(tx - bx) / (ty - by)
+        if by + counter < my:
+            delta1 = float(mx - bx) / (my - by)
+            draw_line(screen, bx + counter*delta0, by + counter,
+                      bx + counter*delta1, by + counter, color)
+        else:
+            delta1 = float(tx - mx) / (ty - my)
+            draw_line(screen, bx + counter*delta0, by + counter,
+                      mx + (counter - my + by)*delta1, by + counter, color)
+        counter += 1
+
+        
+def add_polygon(points, x0, y0, z0, x1, y1, z1, x2, y2, z2):
+    add_point(points, x0, y0, z0)
+    add_point(points, x1, y1, z1)
+    add_point(points, x2, y2, z2)
+
     
-def draw_polygons( points, screen, color ):
-
+def draw_polygons(points, screen, color):
     if len(points) < 3:
         print 'Need at least 3 points to draw a polygon!'
         return
-
     p = 0
-    while p < len( points ) - 2:
-
+    while p < len(points) - 2:
         if calculate_dot( points, p ) < 0:
+            top = 0
+            bottom = 0
+            for i in range(2):
+                if points[p + i + 1][1] > points[p + top][1]:
+                    top = i + 1
+                if points[p + i + 1][1] < points[p + bottom][1]:
+                    bottom = i + 1
+            middle = 3 - top - bottom
+            scanline_conversion(screen,
+                                points[p+top][0], points[p+top][1],
+                                points[p+middle][0], points[p+middle][1],
+                                points[p+bottom][0], points[p+bottom][1],
+                                colors[p / 3 % len(colors)])
             draw_line( screen, points[p][0], points[p][1],
                        points[p+1][0], points[p+1][1], color )
             draw_line( screen, points[p+1][0], points[p+1][1],
                        points[p+2][0], points[p+2][1], color )
             draw_line( screen, points[p+2][0], points[p+2][1],
                        points[p][0], points[p][1], color )
-        p+= 3
+            
+        p += 3
 
 
 
