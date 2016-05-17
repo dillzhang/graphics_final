@@ -312,25 +312,27 @@ def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
         y0 = y
         t+= step
 
-def draw_lines( matrix, screen, color ):
-    if len( matrix ) < 2:
-        print "Need at least 2 points to draw a line"
         
+def draw_lines(matrix, screen, color):
+    if len(matrix) < 2:
+        print "Need at least 2 points to draw a line"
     p = 0
-    while p < len( matrix ) - 1:
-        draw_line( screen, matrix[p][0], matrix[p][1],
-                   matrix[p+1][0], matrix[p+1][1], color )
-        p+= 2
+    while p < len(matrix) - 1:
+        draw_line(screen, matrix[p][0], matrix[p][1],
+                  matrix[p+1][0], matrix[p+1][1], color)
+        p += 2
 
-def add_edge( matrix, x0, y0, z0, x1, y1, z1 ):
-    add_point( matrix, x0, y0, z0 )
-    add_point( matrix, x1, y1, z1 )
+        
+def add_edge(matrix, x0, y0, z0, x1, y1, z1):
+    add_point(matrix, x0, y0, z0)
+    add_point(matrix, x1, y1, z1)
 
-def add_point( matrix, x, y, z=0 ):
-    matrix.append( [x, y, z, 1] )
+    
+def add_point(matrix, x, y, z=0):
+    matrix.append([x, y, z, 1])
 
 
-def draw_line( screen, x0, y0, x1, y1, color ):
+def draw_line(screen, x0, y0, x1, y1, color):
     dx = x1 - x0
     dy = y1 - y0
     if dx + dy < 0:
