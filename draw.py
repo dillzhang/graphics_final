@@ -5,11 +5,16 @@ from math import cos, sin, pi
 
 MAX_STEPS = 100
 colors = [
-    [238, 064, 053],
-    [243, 119, 054],
-    [253, 244, 152],
-    [123, 192, 067],
-    [003, 146, 207],
+    [ 82,  72, 156],
+    [ 64,  98, 187],
+    [ 89, 195, 195],
+    [235, 235, 235],
+    [244,  91, 105]
+    # [238,  64,  53],
+    # [243, 119,  54],
+    # [253, 244, 152],
+    # [123, 192,  67],
+    # [  3, 146, 207],
     # [250, 205, 205],
     # [248, 250, 205],
     # [210, 250, 205],
@@ -59,6 +64,7 @@ def draw_polygons(points, screen, color):
                                 points[p+middle][0], points[p+middle][1],
                                 points[p+bottom][0], points[p+bottom][1],
                                 colors[p / 3 % len(colors)])
+            color = colors[p / 3 % len(colors)]
             draw_line( screen, points[p][0], points[p][1],
                        points[p+1][0], points[p+1][1], color )
             draw_line( screen, points[p+1][0], points[p+1][1],
