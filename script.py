@@ -83,6 +83,7 @@ def run(filename):
         frame_values = second_pass(commands, animation_values[0])
     for i in range(animation_values[0]):
         screen = new_screen()
+        z_buffer = new_screen(XRES, YRES, [None])
         stack = [tmp]
         print "Frame %04d" % i
         for command in commands:
@@ -100,32 +101,32 @@ def run(filename):
                 m = []
                 add_sphere(m, command[1], command[2], command[3], command[4], 5)
                 matrix_mult(stack[-1], m)
-                draw_polygons( m, screen, color )
+                draw_polygons(m, screen, z_buffer, color)
             if command[0] == "torus":
                 m = []
                 add_torus(m, command[1], command[2], command[3], command[4], command[5], 5)
                 matrix_mult(stack[-1], m)
-                draw_polygons( m, screen, color )
+                draw_polygons( m, screen, z_buffer, color )
             if command[0] == "box":
                 m = []
                 add_box(m, *command[1:])
                 matrix_mult(stack[-1], m)
-                draw_polygons( m, screen, color )
+                draw_polygons( m, screen, z_buffer, color )
             if command[0] == "line":
                 m = []
                 add_edge(m, *command[1:])
                 matrix_mult(stack[-1], m)
-                draw_lines( m, screen, color )
+                draw_lines( m, screen, z_buffer, color )
             if command[0] == "bezier":
                 m = []
                 add_curve(m, command[1], command[2], command[3], command[4], command[5], command[6], command[7], command[8], .05, 'bezier')
                 matrix_mult(stack[-1], m)
-                draw_lines( m, screen, color )
+                draw_lines( m, screen, z_buffer, color )
             if command[0] == "hermite":
                 m = []
                 add_curve(m, command[1], command[2], command[3], command[4], command[5], command[6], command[7], command[8], .05, 'hermite')
                 matrix_mult(stack[-1], m)
-                draw_lines( m, screen, color )
+                draw_lines( m, screen, z_buffer, color )
             if command[0] == "circle":
                 m = []
                 add_circle(m, command[1], command[2], command[3], command[4], .05)
