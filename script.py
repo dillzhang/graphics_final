@@ -101,17 +101,20 @@ def run(filename):
                 m = []
                 add_sphere(m, command[1], command[2], command[3], command[4], 5)
                 matrix_mult(stack[-1], m)
-                draw_polygons(m, screen, z_buffer, color)
+                draw_flat_polygons(m, screen, z_buffer)
+                #draw_polygons(m, screen, z_buffer, color)
             if command[0] == "torus":
                 m = []
                 add_torus(m, command[1], command[2], command[3], command[4], command[5], 5)
                 matrix_mult(stack[-1], m)
-                draw_polygons( m, screen, z_buffer, color )
+                draw_flat_polygons(m, screen, z_buffer)
+                #draw_polygons( m, screen, z_buffer, color )
             if command[0] == "box":
                 m = []
                 add_box(m, *command[1:])
                 matrix_mult(stack[-1], m)
-                draw_polygons( m, screen, z_buffer, color )
+                draw_flat_polygons(m, screen, z_buffer)
+                #draw_polygons( m, screen, z_buffer, color )
             if command[0] == "line":
                 m = []
                 add_edge(m, *command[1:])
@@ -134,7 +137,7 @@ def run(filename):
                 draw_lines( m, screen, color )
             if command[0] in ["move", "scale", "rotate"]:
                 factor = 1
-                if command[-1]:
+                if command[-1] and len(frame_values) > 0:
                     factor = frame_values[i][command[-1]]
                 t = new_matrix()
                 if command[0] == "move":                
