@@ -55,7 +55,7 @@ def add_polygon(points, x0, y0, z0, x1, y1, z1, x2, y2, z2):
     add_point(points, x2, y2, z2)
 
 
-def draw_flat_polygons(points, screen, z_buffer, color_properties=[0.33, 0.33, 0.33], ambient=[128, 128, 128], point_lights=[[250,250,125,128,128,128]]):
+def draw_flat_polygons(points, screen, z_buffer, color_properties=[0.30, 0.50, 0.20], ambient_light=[128, 0, 0], point_lights=[[0, 0, -250, 255, 0, 0]]):
     if len(points) < 3:
         print 'Need at least 3 points to draw a polygon!'
         return
@@ -71,9 +71,9 @@ def draw_flat_polygons(points, screen, z_buffer, color_properties=[0.33, 0.33, 0
                     bottom = i + 1
             middle = 3 - top - bottom
             center = return_center(points[p:p+3])
-            ambient = return_ambient(ambient, color_properties[0])
+            ambient = return_ambient(ambient_light, color_properties[0])
             diffuse = return_diffuse(point_lights, color_properties[1], center, points[p:p+3])
-            specular = return_specular(point_lights, color_properties[2], center)
+            specular = return_specular(point_lights, color_properties[2], center, points[p:p+3], [0, 0, -1])
             color = return_color(ambient, diffuse, specular)
             scanline_conversion(screen,
                                 points[p+top][0], points[p+top][1], points[p+top][2],
